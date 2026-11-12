@@ -8,6 +8,7 @@ import 'package:wakelock/wakelock.dart';
 
 import '../components/buttons.dart';
 import '../logic/services/receiver_service.dart';
+import 'join_code.dart';
 import '../logic/sharing_object.dart';
 import '../utils/helper.dart';
 import 'open_dialog.dart';
@@ -148,6 +149,17 @@ class _ReceiverDialogState extends State<ReceiverDialog> {
                   ),
                 ),
           actions: [
+            if (Platform.isAndroid)
+              DialogTextButton(context.l.receiveJoinWithCode, () async {
+                final joined = await showDialog<bool>(
+                  context: context,
+                  builder: (_) => const JoinCodeDialog(),
+                );
+                if (joined == true) {
+                  await receiverService.ipService.load();
+                  receiverService.loop = 0;
+                }
+              }),
             DialogTextButton(
               context.l.sharingNetworkInterfaces,
               receiverService.loaded

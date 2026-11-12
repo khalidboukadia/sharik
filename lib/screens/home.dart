@@ -15,6 +15,8 @@ import '../dialogs/receive.dart';
 import '../dialogs/send.dart';
 import '../dialogs/tracking_consent.dart';
 import '../logic/sharing_object.dart';
+import '../logic/wifi_bridge.dart';
+import 'send/connect_screen.dart';
 import 'send/selection_widgets.dart';
 import 'send/send_screen.dart';
 import '../utils/helper.dart';
@@ -269,9 +271,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _openSend() async {
     // Android: the new full-screen sender; other platforms keep the old dialog
-    final obj = Platform.isAndroid
-        ? await SendScreen.open(context)
-        : await openDialog(context, const SendDialog());
+    SharingObject? obj;
+    if (Platform.isAndroid) {
+      // like SHAREit: first make sure both phones can be on the same network
+      if (!await ConnectScreen.open(context) || !mounted) return;
+      obj = await SendScreen.open(context);
+      // nothing chosen: do not leave a hotspot running for no reason
+      if (obj == null) await HotspotSession.stop();
+    } else {
+      obj = await openDialog(context, const SendDialog());
+    }
     if (obj != null) {
       _shareFile(obj);
     }

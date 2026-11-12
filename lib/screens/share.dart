@@ -19,6 +19,7 @@ import '../dialogs/select_network.dart';
 import '../logic/services/ip_service.dart';
 import '../logic/services/sharing_service.dart';
 import '../logic/sharing_object.dart';
+import '../logic/wifi_bridge.dart';
 import '../utils/helper.dart';
 
 class SharingScreen extends StatefulWidget {
@@ -46,6 +47,8 @@ class ShareState extends State<SharingScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     _sharingService.end();
+    // hotspot created by the Send flow (no-op otherwise)
+    HotspotSession.stop();
 
     if (_conController.isAnimating) _conController.stop();
 
@@ -63,6 +66,10 @@ class ShareState extends State<SharingScreen> with TickerProviderStateMixin {
     // todo init stuff in a separate method
     _file = widget._file;
 
+    // sharing from our own hotspot: advertise that interface's address
+    if (HotspotSession.interfaceName != null) {
+      _ipService.selectedInterface = HotspotSession.interfaceName;
+    }
     _ipService.load();
 
     _sharingService = SharingService(_file, context);

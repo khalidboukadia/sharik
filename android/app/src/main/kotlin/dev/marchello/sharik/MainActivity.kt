@@ -9,6 +9,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 class MainActivity: FlutterActivity() {
     private var appPackagePlugin: AppPackagePlugin? = null
     private var mediaPlugin: MediaPlugin? = null
+    private var wifiPlugin: WifiPlugin? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -22,6 +23,11 @@ class MainActivity: FlutterActivity() {
         mediaPlugin = media
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, MediaPlugin.CHANNEL)
             .setMethodCallHandler(media)
+
+        val wifi = WifiPlugin(this)
+        wifiPlugin = wifi
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WifiPlugin.CHANNEL)
+            .setMethodCallHandler(wifi)
     }
 
     override fun onRequestPermissionsResult(
@@ -31,6 +37,7 @@ class MainActivity: FlutterActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         mediaPlugin?.onRequestPermissionsResult(requestCode, grantResults)
+        wifiPlugin?.onRequestPermissionsResult(requestCode, grantResults)
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
@@ -38,6 +45,8 @@ class MainActivity: FlutterActivity() {
         appPackagePlugin = null
         mediaPlugin?.dispose()
         mediaPlugin = null
+        wifiPlugin?.dispose()
+        wifiPlugin = null
         super.cleanUpFlutterEngine(flutterEngine)
     }
 

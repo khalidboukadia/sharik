@@ -42,6 +42,9 @@ class LocalIpService extends ChangeNotifier {
       _getIpByName('bridge'),
       // linux hotspot
       _getIpByName('hotspot'),
+      // android hotspot (tethering / local-only hotspot)
+      _getIpByName('swlan'),
+      _getIpByName('ap0'),
       // windows wifi
       _getIpByName('Wi-Fi'),
       // linux ethernet
