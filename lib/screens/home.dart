@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -13,6 +15,8 @@ import '../dialogs/receive.dart';
 import '../dialogs/send.dart';
 import '../dialogs/tracking_consent.dart';
 import '../logic/sharing_object.dart';
+import 'send/selection_widgets.dart';
+import 'send/send_screen.dart';
 import '../utils/helper.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -263,32 +267,35 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _openSend() async {
+    // Android: the new full-screen sender; other platforms keep the old dialog
+    final obj = Platform.isAndroid
+        ? await SendScreen.open(context)
+        : await openDialog(context, const SendDialog());
+    if (obj != null) {
+      _shareFile(obj);
+    }
+  }
+
+  /// Two big icons: share (send) and receive.
   Widget _sharingButtons(BuildContext c) {
-    return Column(
+    return Row(
       children: [
-        PrimaryButton(
-          height: 110,
-          onClick: () async {
-            final obj = await openDialog(context, const SendDialog());
-            if (obj != null) {
-              _shareFile(obj);
-            }
-          },
-          text: c.l.homeSend,
-          secondaryIcon: Icon(
-            LucideIcons.upload,
-            size: 42,
-            color: Colors.deepPurple.shade200.withOpacity(0.8),
+        Expanded(
+          child: _ActionTile(
+            icon: LucideIcons.upload,
+            label: c.l.homeSend,
+            onTap: _openSend,
           ),
         ),
-        const SizedBox(height: 12),
-        PrimaryButton(
-          height: 60,
-          onClick: () async {
-            openDialog(context, ReceiverDialog());
-          },
-          text: c.l.homeReceive,
-        )
+        const SizedBox(width: 12),
+        Expanded(
+          child: _ActionTile(
+            icon: LucideIcons.download,
+            label: c.l.homeReceive,
+            onTap: () => openDialog(context, ReceiverDialog()),
+          ),
+        ),
       ],
     );
   }
@@ -326,6 +333,48 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         () => _shareFile(f),
+      ),
+    );
+  }
+}
+
+class _ActionTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _ActionTile({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PressScale(
+      scale: 0.96,
+      onTap: onTap,
+      child: Container(
+        height: 150,
+        decoration: BoxDecoration(
+          color: Colors.deepPurple.shade400,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 52, color: Colors.grey.shade100),
+            const SizedBox(height: 12),
+            Text(
+              label,
+              style: GoogleFonts.getFont(
+                context.l.fontAndika,
+                color: Colors.grey.shade100,
+                fontSize: 22,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
