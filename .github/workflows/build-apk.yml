@@ -1,0 +1,58 @@
+name: Build APK
+
+on:
+  push:
+    branches: [sharik-app-sharing]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      # the project targets Dart >=2.17 <3.0 (Flutter 3.0 - 3.7)
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.10'
+          channel: stable
+          cache: true
+
+      - name: Build debug APK
+        run: |
+          set -o pipefail
+          {
+            flutter --version
+            flutter pub get
+            flutter build apk --debug
+          } 2>&1 | tee build.log
+
+      - name: Publish APK as a release
+        if: success()
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: app-sharing-latest
+          name: Sharik (app sharing) - latest build
+          prerelease: true
+          body: Debug build of the sharik-app-sharing branch, commit ${{ github.sha }}
+          target_commitish: ${{ github.sha }}
+          files: build/app/outputs/flutter-apk/app-debug.apk
+
+      # keep the build log readable from the repo (branch ci-logs)
+      - name: Save build log
+        if: always()
+        run: |
+          mkdir /tmp/ci && cp build.log /tmp/ci/build.log 2>/dev/null || true
+          tail -n 400 /tmp/ci/build.log > /tmp/ci/build-tail.log 2>/dev/null || true
+          cd /tmp/ci && git init -q && git checkout -q -b ci-logs
+          git -c user.name=ci -c user.email=ci@example.com add -A
+          git -c user.name=ci -c user.email=ci@example.com commit -q -m "build log ${{ github.sha }}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-logs
