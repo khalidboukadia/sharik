@@ -10,6 +10,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.Environment
+import android.content.ContentValues
+import android.provider.MediaStore
+import android.provider.Settings
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
@@ -101,6 +105,22 @@ class AppPackagePlugin(private val context: Context) : MethodChannel.MethodCallH
                     sizes
                 }
             }
+            "receiveDir" -> {
+                val dir = (context.getExternalFilesDir(null) ?: context.filesDir)
+                result.success(File(dir, "incoming").apply { mkdirs() }.absolutePath)
+            }
+            "deviceName" -> {
+                val name = try {
+                    Settings.Global.getString(context.contentResolver, "device_name")
+                } catch (e: Exception) {
+                    null
+                }
+                result.success(if (name.isNullOrBlank()) Build.MODEL else name)
+            }
+            "saveToDownloads" -> {
+                val paths = call.argument<List<String>>("paths") ?: emptyList()
+                runAsync(result) { saveToDownloads(paths) }
+            }
             "install" -> {
                 val dir = call.argument<String>("dir")
                 val pkg = call.argument<String>("packageName")
@@ -153,6 +173,37 @@ class AppPackagePlugin(private val context: Context) : MethodChannel.MethodCallH
                 mapOf("name" to it.name, "path" to it.absolutePath, "size" to it.length())
             }
         )
+    }
+
+    /** Copies received files into Downloads/Sharik. Returns how many were saved. */
+    @Suppress("DEPRECATION")
+    private fun saveToDownloads(paths: List<String>): Int {
+        var saved = 0
+        for (path in paths) {
+            val src = File(path)
+            if (!src.isFile) continue
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val values = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, src.name)
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Sharik")
+                }
+                val resolver = context.contentResolver
+                val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values) ?: continue
+                resolver.openOutputStream(uri)?.use { out ->
+                    FileInputStream(src).use { it.copyTo(out, 64 * 1024) }
+                    saved++
+                }
+            } else {
+                // Android 9 and below: plain file copy (needs the storage permission to be granted)
+                val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Sharik")
+                if (dir.isDirectory || dir.mkdirs()) {
+                    src.copyTo(File(dir, src.name), overwrite = true)
+                    saved++
+                }
+            }
+        }
+        return saved
     }
 
     private fun install(dir: String, pkg: String, result: MethodChannel.Result) {

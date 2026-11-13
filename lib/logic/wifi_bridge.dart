@@ -124,6 +124,21 @@ class LocalNetwork {
     return null;
   }
 
+  /// Every local IPv4 address of Wi-Fi / hotspot interfaces. [preferred] (the hotspot
+  /// interface, when known) goes first.
+  static Future<List<String>> addresses({String? preferred}) async {
+    final list = await NetworkInterface.list(type: InternetAddressType.IPv4);
+    final first = <String>[];
+    final rest = <String>[];
+    for (final i in list) {
+      if (i.name != preferred && !_lanInterface.hasMatch(i.name)) continue;
+      for (final a in i.addresses) {
+        (i.name == preferred ? first : rest).add(a.address);
+      }
+    }
+    return [...first, ...rest];
+  }
+
   static Future<Set<String>> interfaceNames() async => (await NetworkInterface.list(
         type: InternetAddressType.IPv4,
       ))

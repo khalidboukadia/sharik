@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../../components/buttons.dart';
 import '../../logic/native_bridge.dart';
 import '../../logic/send_selection.dart';
-import '../../logic/sharing_object.dart';
 import '../../utils/helper.dart';
 import 'apps_tab.dart';
 import 'files_tab.dart';
@@ -19,14 +18,14 @@ import 'selection_widgets.dart';
 /// apps / images / videos / music / files. The selection is shared by all
 /// categories, and the bottom bar sends everything at once.
 ///
-/// Pops with a [SharingObject] ready for the existing sharing flow.
+/// Pops with a [SendResult] (ticked items and/or a typed text).
 class SendScreen extends StatefulWidget {
   const SendScreen();
 
   /// Slides in from the right and back out the same way it came.
-  static Future<SharingObject?> open(BuildContext context) =>
-      Navigator.of(context).push<SharingObject>(
-        PageRouteBuilder<SharingObject>(
+  static Future<SendResult?> open(BuildContext context) =>
+      Navigator.of(context).push<SendResult>(
+        PageRouteBuilder<SendResult>(
           transitionDuration: motion(context, 280),
           reverseTransitionDuration: motion(context, 240),
           pageBuilder: (_, __, ___) => const SendScreen(),
@@ -50,7 +49,6 @@ class _SendScreenState extends State<SendScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabs = TabController(length: 5, vsync: this);
   final SendSelection _selection = SendSelection();
-  bool _preparing = false;
 
   @override
   void dispose() {
@@ -59,22 +57,9 @@ class _SendScreenState extends State<SendScreen>
     super.dispose();
   }
 
-  Future<void> _send() async {
-    if (_preparing || _selection.isEmpty) return;
-    setState(() => _preparing = true);
-
-    try {
-      // resolves every selected app to base APK + all its splits
-      final obj = await _selection.toSharingObject();
-      if (!mounted) return;
-      Navigator.of(context).pop(obj);
-    } catch (_) {
-      if (!mounted) return;
-      setState(() => _preparing = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l.sendError)),
-      );
-    }
+  void _send() {
+    if (_selection.isEmpty) return;
+    Navigator.of(context).pop(SendResult(items: _selection.items));
   }
 
   Widget _tab(IconData icon, String label) => Tab(
@@ -164,7 +149,10 @@ class _SendScreenState extends State<SendScreen>
                   const MediaTab(MediaKind.images),
                   const MediaTab(MediaKind.videos),
                   const MediaTab(MediaKind.audio),
-                  FilesTab(onText: (text) => Navigator.of(context).pop(text)),
+                  FilesTab(
+                    onText: (text) =>
+                        Navigator.of(context).pop(SendResult(text: text.data)),
+                  ),
                 ],
               ),
             ),
@@ -207,8 +195,7 @@ class _SendScreenState extends State<SendScreen>
                                 child: PrimaryButton(
                                   height: 52,
                                   fontSize: 18,
-                                  loading: _preparing,
-                                  onClick: _preparing ? null : _send,
+                                  onClick: _send,
                                   text:
                                       '${context.l.generalSend} (${selection.count})',
                                 ),

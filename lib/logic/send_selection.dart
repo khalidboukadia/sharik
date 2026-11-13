@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 import '../conf.dart';
 import '../utils/format.dart';
 import 'native_bridge.dart';
+import 'session/session_models.dart';
 import 'sharing_object.dart';
 
 enum SelectedKind { app, file }
@@ -116,5 +119,52 @@ class SendSelection extends ChangeNotifier {
       data: paths.join(multipleFilesDelimiter),
       name: '${n == 1 ? '' : '$n: '}${names.join(' ')}',
     );
+  }
+}
+
+/// What the Send screen hands back: ticked items and/or a typed text.
+class SendResult {
+  final List<SelectedItem> items;
+  final String? text;
+
+  const SendResult({this.items = const [], this.text});
+
+  /// Turns the selection into things the session can offer. Every app becomes ONE item
+  /// carrying its base APK and all splits.
+  Future<List<OutgoingSpec>> toSpecs() async {
+    final specs = <OutgoingSpec>[];
+
+    final t = text;
+    if (t != null && t.isNotEmpty) {
+      specs.add(OutgoingSpec(
+        kind: ItemKind.text,
+        title: t.length > 60 ? '${t.substring(0, 60)}...' : t,
+        text: t,
+      ));
+    }
+
+    for (final i in items) {
+      if (i.kind == SelectedKind.app) {
+        final info = await AppPackageApi.getAppPackage(i.packageName!);
+        specs.add(OutgoingSpec(
+          kind: ItemKind.app,
+          title: info.appName,
+          packageName: info.packageName,
+          versionName: info.versionName,
+          files: [
+            for (final f in info.files)
+              TransferFile(name: f.name, size: f.size, path: f.path),
+          ],
+        ));
+      } else {
+        final file = File(i.path!);
+        specs.add(OutgoingSpec(
+          kind: ItemKind.file,
+          title: i.label,
+          files: [TransferFile(name: basename(i.path!), size: await file.length(), path: i.path)],
+        ));
+      }
+    }
+    return specs;
   }
 }

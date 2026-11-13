@@ -3,6 +3,7 @@ package dev.marchello.sharik
 import android.Manifest
 import android.app.Activity
 import android.content.ContentUris
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Size
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -30,6 +32,7 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
     private var pendingPermission: MethodChannel.Result? = null
+    private var pendingKind: String = "images"
 
     fun dispose() {
         executor.shutdown()
@@ -37,8 +40,18 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "hasPermission" -> result.success(hasPermission())
-            "requestPermission" -> requestPermission(result)
+            "hasPermission" -> result.success(hasPermission(call.argument<String>("kind") ?: "images"))
+            "requestPermission" -> requestPermission(call.argument<String>("kind") ?: "images", result)
+            "openAppSettings" -> {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    .setData(Uri.fromParts("package", activity.packageName, null))
+                try {
+                    activity.startActivity(intent)
+                    result.success(true)
+                } catch (e: Exception) {
+                    result.success(false)
+                }
+            }
             "list" -> {
                 val kind = call.argument<String>("kind")
                 if (kind == null) {
@@ -60,14 +73,28 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
         }
     }
 
-    private fun hasPermission(): Boolean {
+    /**
+     * Android 13+ replaced READ_EXTERNAL_STORAGE by one permission per media type; asking for the
+     * old one there is silently denied (no dialog), which is why nothing showed up before.
+     */
+    private fun permissionFor(kind: String): String =
+        if (Build.VERSION.SDK_INT >= 33) {
+            when (kind) {
+                "videos" -> "android.permission.READ_MEDIA_VIDEO"
+                "audio" -> "android.permission.READ_MEDIA_AUDIO"
+                else -> "android.permission.READ_MEDIA_IMAGES"
+            }
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+
+    private fun hasPermission(kind: String): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true
-        return activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-            PackageManager.PERMISSION_GRANTED
+        return activity.checkSelfPermission(permissionFor(kind)) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestPermission(result: MethodChannel.Result) {
-        if (hasPermission()) {
+    private fun requestPermission(kind: String, result: MethodChannel.Result) {
+        if (hasPermission(kind)) {
             result.success(true)
             return
         }
@@ -76,11 +103,9 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
             return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingKind = kind
             pendingPermission = result
-            activity.requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_CODE
-            )
+            activity.requestPermissions(arrayOf(permissionFor(kind)), PERMISSION_REQUEST_CODE)
         } else {
             result.success(true)
         }
@@ -114,7 +139,7 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
 
     @Suppress("DEPRECATION")
     private fun list(kind: String): List<Map<String, Any?>> {
-        if (!hasPermission()) throw SecurityException("Storage permission not granted")
+        if (!hasPermission(kind)) throw SecurityException("Media permission not granted")
 
         val projection = ArrayList<String>().apply {
             add(MediaStore.MediaColumns._ID)

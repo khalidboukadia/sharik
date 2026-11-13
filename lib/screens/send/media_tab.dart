@@ -25,7 +25,7 @@ class MediaTab extends StatefulWidget {
 }
 
 class _MediaTabState extends State<MediaTab>
-    with AutomaticKeepAliveClientMixin<MediaTab> {
+    with AutomaticKeepAliveClientMixin<MediaTab>, WidgetsBindingObserver {
   bool _loading = true;
   bool _denied = false;
   bool _failed = false;
@@ -40,7 +40,19 @@ class _MediaTabState extends State<MediaTab>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _init();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && (_denied || _failed)) _init();
   }
 
   Future<void> _init() async {
@@ -51,8 +63,8 @@ class _MediaTabState extends State<MediaTab>
     });
 
     try {
-      final granted =
-          await MediaApi.hasPermission() || await MediaApi.requestPermission();
+      final granted = await MediaApi.hasPermission(widget.kind) ||
+          await MediaApi.requestPermission(widget.kind);
       if (!mounted) return;
       if (!granted) {
         setState(() {
@@ -114,6 +126,22 @@ class _MediaTabState extends State<MediaTab>
                   fontSize: 16,
                   onClick: _init,
                   text: context.l.sendAllowAccess,
+                ),
+              ),
+              const SizedBox(height: 10),
+              // after a refusal "don't ask again" Android shows no dialog any more
+              SizedBox(
+                width: 220,
+                child: TransparentButton(
+                  Center(
+                    child: Text(
+                      context.l.sendOpenAppSettings,
+                      style: GoogleFonts.getFont(context.l.fontAndika, fontSize: 15),
+                    ),
+                  ),
+                  MediaApi.openAppSettings,
+                  TransparentButtonBackground.def,
+                  border: true,
                 ),
               ),
             ],

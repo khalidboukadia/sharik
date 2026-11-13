@@ -98,14 +98,54 @@ class AppPackageApi {
   }
 }
 
+class InstallResult {
+  final bool success;
+  final String message;
+
+  const InstallResult(this.success, this.message);
+}
+
+/// Device-level helpers used by the transfer session.
+class DeviceApi {
+  static const _channel = MethodChannel('dev.marchello.sharik/app_package');
+
+  static Future<String> deviceName() async =>
+      (await _channel.invokeMethod<String>('deviceName')) ?? 'Android';
+
+  /// App-specific folder (no permission needed) where incoming files land first.
+  static Future<String> receiveDir() async =>
+      (await _channel.invokeMethod<String>('receiveDir'))!;
+
+  /// Copies files into Downloads/Sharik. Returns how many were saved.
+  static Future<int> saveToDownloads(List<String> paths) async =>
+      (await _channel.invokeMethod<int>('saveToDownloads', {'paths': paths})) ?? 0;
+
+  /// Installs every .apk of [dir] as one PackageInstaller session (base + splits).
+  static Future<InstallResult> install(String dir, String packageName) async {
+    try {
+      final m = await _channel.invokeMapMethod<String, dynamic>(
+        'install',
+        {'dir': dir, 'packageName': packageName},
+      );
+      return InstallResult(m!['success'] == true, (m['message'] as String?) ?? '');
+    } on PlatformException catch (e) {
+      return InstallResult(false, e.message ?? e.code);
+    }
+  }
+}
+
 class MediaApi {
   static const _channel = MethodChannel('dev.marchello.sharik/media');
 
-  static Future<bool> hasPermission() async =>
-      (await _channel.invokeMethod<bool>('hasPermission')) ?? false;
+  static Future<bool> hasPermission(MediaKind kind) async =>
+      (await _channel.invokeMethod<bool>('hasPermission', {'kind': kind.name})) ?? false;
 
-  static Future<bool> requestPermission() async =>
-      (await _channel.invokeMethod<bool>('requestPermission')) ?? false;
+  static Future<bool> requestPermission(MediaKind kind) async =>
+      (await _channel.invokeMethod<bool>('requestPermission', {'kind': kind.name})) ?? false;
+
+  /// Opens the system page of this app (needed once a permission was refused for good).
+  static Future<bool> openAppSettings() async =>
+      (await _channel.invokeMethod<bool>('openAppSettings')) ?? false;
 
   static Future<List<MediaItem>> list(MediaKind kind) async {
     final res = await _channel.invokeListMethod<dynamic>(

@@ -41,6 +41,8 @@ dependencies:
   http: ^0.13.5
 
   url_launcher: ^6.1.5
+  # camera QR scanner (ZXing, no Google services needed)
+  qr_code_scanner: ^1.0.1
   device_apps: ^2.2.0
 
 #  hive: ^2.0.4

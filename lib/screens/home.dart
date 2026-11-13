@@ -15,8 +15,8 @@ import '../dialogs/receive.dart';
 import '../dialogs/send.dart';
 import '../dialogs/tracking_consent.dart';
 import '../logic/sharing_object.dart';
-import '../logic/wifi_bridge.dart';
-import 'send/connect_screen.dart';
+import 'session/host_screen.dart';
+import 'session/scan_screen.dart';
 import 'send/selection_widgets.dart';
 import 'send/send_screen.dart';
 import '../utils/helper.dart';
@@ -270,20 +270,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _openSend() async {
-    // Android: the new full-screen sender; other platforms keep the old dialog
-    SharingObject? obj;
     if (Platform.isAndroid) {
-      // like SHAREit: first make sure both phones can be on the same network
-      if (!await ConnectScreen.open(context) || !mounted) return;
-      obj = await SendScreen.open(context);
-      // nothing chosen: do not leave a hotspot running for no reason
-      if (obj == null) await HotspotSession.stop();
-    } else {
-      obj = await openDialog(context, const SendDialog());
+      // 1) pick what to send  2) scan the receiver's QR code  3) the shared session page
+      final result = await SendScreen.open(context);
+      if (result == null || !mounted) return;
+      await ScanScreen.open(context, result);
+      return;
     }
+
+    final obj = await openDialog(context, const SendDialog());
     if (obj != null) {
       _shareFile(obj);
     }
+  }
+
+  Future<void> _openReceive() async {
+    if (Platform.isAndroid) {
+      await HostScreen.open(context);
+      return;
+    }
+    await openDialog(context, ReceiverDialog());
   }
 
   /// Two big icons: share (send) and receive.
@@ -302,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: _ActionTile(
             icon: LucideIcons.download,
             label: c.l.homeReceive,
-            onTap: () => openDialog(context, ReceiverDialog()),
+            onTap: _openReceive,
           ),
         ),
       ],

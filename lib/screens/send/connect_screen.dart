@@ -108,10 +108,8 @@ class _ConnectScreenState extends State<ConnectScreen> with WidgetsBindingObserv
         await HotspotSession.stop();
         return;
       }
-      setState(() {
-        _hotspot = creds;
-        _phase = _Phase.hotspotReady;
-      });
+      // the QR code (shown by the host screen) carries the credentials: nothing more to show here
+      Navigator.of(context).pop(true);
     } on WifiException catch (e) {
       if (!mounted) return;
       setState(() {
