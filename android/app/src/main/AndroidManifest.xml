@@ -23,7 +23,7 @@
 
 
     <application
-            android:label="Sharik"
+            android:label="SharKhalid"
             android:icon="@mipmap/ic_launcher">
         <activity
                 android:name=".MainActivity"

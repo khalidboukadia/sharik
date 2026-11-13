@@ -27,9 +27,9 @@
   "intro2SendTitle": "KIRIM",
   "intro2SendDescription": "Anda dapat membagikan gambar, video, berkas, dan teks",
   "intro3ReceiveTitle": "TERIMA",
-  "intro3ReceiveDescription": "Buka tautannya di perangkat lain pada browser web apapun. Jika Anda memiliki Sharik di kedua perangkat, Anda juga dapat menggunakan fungsi penerima",
+  "intro3ReceiveDescription": "Buka tautannya di perangkat lain pada browser web apapun. Jika Anda memiliki SharKhalid di kedua perangkat, Anda juga dapat menggunakan fungsi penerima",
   "intro4EverywhereTitle": "DIMANAPUN",
-  "intro4EverywhereDescription": "Sharik tersedia pada semua platform mobile dan desktop utama. Serta, Sharik itu gratis, tidak ada iklan padanya, dan kodenya dipublikasikan daring.\nKlik disini untuk mengetahui lebih lanjut",
+  "intro4EverywhereDescription": "SharKhalid tersedia pada semua platform mobile dan desktop utama. Serta, SharKhalid itu gratis, tidak ada iklan padanya, dan kodenya dipublikasikan daring.\nKlik disini untuk mengetahui lebih lanjut",
   "@_ABOUT_PAGE": {},
   "aboutInstalledVersion": "Versi terpasang",
   "aboutLatestVersion": "Versi paling mutakhir",
@@ -40,7 +40,7 @@
   "aboutOpenSourceLicenses": "Lisensi sumber terbuka",
   "aboutTrackingPolicy": "Kebijakan pelacakan (tracking)",
   "aboutContributors": "Kontributor-kontributor",
-  "aboutSharikText": "Sharik sepenuhnya gratis dengan kodenya dipublikasikan di GitHub.\nSemua orang dipersilakan untuk berkontribusi :>",
+  "aboutSharikText": "SharKhalid sepenuhnya gratis dengan kodenya dipublikasikan di GitHub.\nSemua orang dipersilakan untuk berkontribusi :>",
   "aboutChangelog": "Changelog",
   "aboutLicenses": "Lisensi",
   "aboutPrivacyPolicy": "Kebijakan privasi",
@@ -70,5 +70,5 @@
   "settingsDisableScreenTransitions": "Nonaktifkan transisi layar",
   "settingsDisableBlur": "Nonaktifkan blur",
   "settingsDisableTracking": "Nonaktifkan pelacakan",
-  "settingsTrackingDescription": "Sharik menggunakan pelacakan yang menjaga privasi untuk mempelajari lebih lanjut tentang pengguna aplikasi. Kami menggunakan data pelacakan untuk merencanakan fitur baru, dan memprioritaskan tugas.\n\nInformasi yang diterima tidak mengandung alamat IP atau informasi yang dapat mengidentifikasi Anda."
+  "settingsTrackingDescription": "SharKhalid menggunakan pelacakan yang menjaga privasi untuk mempelajari lebih lanjut tentang pengguna aplikasi. Kami menggunakan data pelacakan untuk merencanakan fitur baru, dan memprioritaskan tugas.\n\nInformasi yang diterima tidak mengandung alamat IP atau informasi yang dapat mengidentifikasi Anda."
 }

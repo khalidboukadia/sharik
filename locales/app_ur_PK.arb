@@ -27,9 +27,9 @@
     "intro2SendTitle": "بھیجیں",
     "intro2SendDescription": "آپ تصاویر، ویڈیوز، فائیلیں اور تحریریں بھیج سکتے ہیں",
     "intro3ReceiveTitle": "وصول کریں",
-    "intro3ReceiveDescription": "Open the link on another device in any web browser. If you have Sharik of both devices, you can also use the receiver function",
+    "intro3ReceiveDescription": "Open the link on another device in any web browser. If you have SharKhalid of both devices, you can also use the receiver function",
     "intro4EverywhereTitle": "ہر جگہ",
-    "intro4EverywhereDescription": "Sharik is available for all major mobile and desktop platforms. Also, it is free, it has no ads, and its code is published online.\nClick here to learn more",
+    "intro4EverywhereDescription": "SharKhalid is available for all major mobile and desktop platforms. Also, it is free, it has no ads, and its code is published online.\nClick here to learn more",
     "@_ABOUT_PAGE": {},
     "aboutInstalledVersion": "موجودہ ورژن",
     "aboutLatestVersion": "تازہ ترین ورژن",
@@ -40,7 +40,7 @@
     "aboutOpenSourceLicenses": "اوپن سورس لائسنس",
     "aboutTrackingPolicy": "Tracking policy",
     "aboutContributors": "Contributors",
-    "aboutSharikText": "Sharik is completely free with its code published on GitHub.\nEveryone is welcomed to contribute :>",
+    "aboutSharikText": "SharKhalid is completely free with its code published on GitHub.\nEveryone is welcomed to contribute :>",
     "aboutChangelog": "تبدیلیوں کا خاتہ",
     "aboutLicenses": "Licenses",
     "aboutPrivacyPolicy": "رازداری کی پالیسی",
@@ -70,5 +70,5 @@
     "settingsDisableScreenTransitions": "سکرین کی حرکات غیر فعال کریں",
     "settingsDisableBlur": "مدھم کرنا غیر فعال کریں",
     "settingsDisableTracking": "ٹریکنگ غیر فعال کریں",
-    "settingsTrackingDescription": "Sharik incorporates privacy-respecting tracking to learn more about the audience of the app. We are using the analytics data to plan new features, and prioritize tasks.\n\nThe collected information does not include IP address or any other identifying information."
+    "settingsTrackingDescription": "SharKhalid incorporates privacy-respecting tracking to learn more about the audience of the app. We are using the analytics data to plan new features, and prioritize tasks.\n\nThe collected information does not include IP address or any other identifying information."
 }

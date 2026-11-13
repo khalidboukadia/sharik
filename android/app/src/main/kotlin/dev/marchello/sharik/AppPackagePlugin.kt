@@ -186,7 +186,7 @@ class AppPackagePlugin(private val context: Context) : MethodChannel.MethodCallH
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val values = ContentValues().apply {
                     put(MediaStore.MediaColumns.DISPLAY_NAME, src.name)
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Sharik")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/SharKhalid")
                 }
                 val resolver = context.contentResolver
                 val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values) ?: continue
@@ -196,7 +196,7 @@ class AppPackagePlugin(private val context: Context) : MethodChannel.MethodCallH
                 }
             } else {
                 // Android 9 and below: plain file copy (needs the storage permission to be granted)
-                val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Sharik")
+                val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "SharKhalid")
                 if (dir.isDirectory || dir.mkdirs()) {
                     src.copyTo(File(dir, src.name), overwrite = true)
                     saved++

@@ -27,9 +27,9 @@
     "intro2SendTitle": "ODOSLAŤ",
     "intro2SendDescription": "Môžete zdieľať obrázky, videá, súbory a text",
     "intro3ReceiveTitle": "PRIJAŤ",
-    "intro3ReceiveDescription": "Otvorte odkaz na inom zariadení v ľubovoľnom webovom prehliadači. Ak je Sharik na oboch zariadeniach, môžete tiež použiť funkciu prijímania",
+    "intro3ReceiveDescription": "Otvorte odkaz na inom zariadení v ľubovoľnom webovom prehliadači. Ak je SharKhalid na oboch zariadeniach, môžete tiež použiť funkciu prijímania",
     "intro4EverywhereTitle": "KDEKOĽVEK",
-    "intro4EverywhereDescription": "Sharik je dostupný pre všetky bežné mobilné a počítačové platformy. Tiež je zdarma, bez reklám a má otvorený zdrojový kód zverejnený na internete. \nPre viac informácií kliknite sem",
+    "intro4EverywhereDescription": "SharKhalid je dostupný pre všetky bežné mobilné a počítačové platformy. Tiež je zdarma, bez reklám a má otvorený zdrojový kód zverejnený na internete. \nPre viac informácií kliknite sem",
     "@_ABOUT_PAGE": {},
     "aboutInstalledVersion": "Nainštalovaná verzia",
     "aboutLatestVersion": "Najnovšia verzia",
@@ -40,7 +40,7 @@
     "aboutOpenSourceLicenses": "Licencie otvoreného zdrojového kódu",
     "aboutTrackingPolicy": "Podmienky sledovania",
     "aboutContributors": "Prispievatelia",
-    "aboutSharikText": "Sharik je zdarma s otvoreným zdrojovým kódom na GitHube. Ktokoľvek môže prispieť :>",
+    "aboutSharikText": "SharKhalid je zdarma s otvoreným zdrojovým kódom na GitHube. Ktokoľvek môže prispieť :>",
     "aboutChangelog": "Zoznam zmien",
     "aboutLicenses": "Licencie",
     "aboutPrivacyPolicy": "Zásady ochrany osobných údajov",
@@ -70,5 +70,5 @@
     "settingsDisableScreenTransitions": "Vypnúť animácie pri zmene obrazovky",
     "settingsDisableBlur": "Vypnúť rozmazanie",
     "settingsDisableTracking": "Vypnúť sledovanie",
-    "settingsTrackingDescription": "Aby sme zistili viac o užívateľoch aplikácie, Sharik používa nástroje na sledovanie, ktoré rešpektujú súkromie. Získané dáta používame na plánovanie nových funkcií a prioritizáciu úloh.\n\nZozbierané informácie neobsahujú IP adresy ani iné osobné údaje."
+    "settingsTrackingDescription": "Aby sme zistili viac o užívateľoch aplikácie, SharKhalid používa nástroje na sledovanie, ktoré rešpektujú súkromie. Získané dáta používame na plánovanie nových funkcií a prioritizáciu úloh.\n\nZozbierané informácie neobsahujú IP adresy ani iné osobné údaje."
 }

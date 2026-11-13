@@ -100,7 +100,7 @@ class SharikApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: languageList.map((e) => e.locale),
-        title: 'Sharik',
+        title: 'SharKhalid',
         theme: ThemeData(
           splashFactory: MaterialInkSplash.splashFactory,
           brightness: Brightness.light,

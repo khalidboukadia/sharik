@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../utils/helper.dart';
 
 class SharikLogo extends StatelessWidget {
   @override
@@ -10,19 +7,19 @@ class SharikLogo extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              'assets/logo.svg',
-              semanticsLabel: 'Sharik app icon',
-              color: context.t.colorScheme.secondary,
+            Image.asset(
+              'assets/logo_app.png',
+              height: 52,
+              semanticLabel: 'SharKhalid app icon',
             ),
             const SizedBox(
-              width: 10,
+              width: 12,
             ),
             Text(
-              'Sharik',
+              'SharKhalid',
               style: GoogleFonts.poppins(
-                fontSize: 36,
-                fontWeight: FontWeight.w500,
+                fontSize: 34,
+                fontWeight: FontWeight.w600,
               ),
             )
           ],

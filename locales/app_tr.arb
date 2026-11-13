@@ -27,9 +27,9 @@
     "intro2SendTitle": "GÖNDER",
     "intro2SendDescription": "Resimler, videolar, dosyalar ve metin belgeleri paylaşabilirsiniz",
     "intro3ReceiveTitle": "AL",
-    "intro3ReceiveDescription": "Bağlantıyı bir başka aygıtta, herhangi bir tarayıcıda açın. Eğer her iki aygıtta da Sharik varsa, alım işlevini de kullanabilirsiniz",
+    "intro3ReceiveDescription": "Bağlantıyı bir başka aygıtta, herhangi bir tarayıcıda açın. Eğer her iki aygıtta da SharKhalid varsa, alım işlevini de kullanabilirsiniz",
     "intro4EverywhereTitle": "HER YERDE",
-    "intro4EverywhereDescription": "Sharik bütün başlıca mobil ve masaüstü platformlarında mevcut. Üstelik özgürdür, reklamsızdır ve kodu çevrim içi olarak yayınlanır.\nDaha fazlasını öğrenmek için tıklayın",
+    "intro4EverywhereDescription": "SharKhalid bütün başlıca mobil ve masaüstü platformlarında mevcut. Üstelik özgürdür, reklamsızdır ve kodu çevrim içi olarak yayınlanır.\nDaha fazlasını öğrenmek için tıklayın",
     "@_ABOUT_PAGE": {},
     "aboutInstalledVersion": "Yüklü sürüm",
     "aboutLatestVersion": "Son sürüm",
@@ -40,7 +40,7 @@
     "aboutOpenSourceLicenses": "Açık kaynak lisansları",
     "aboutTrackingPolicy": "İzleme politikası",
     "aboutContributors": "Katkıda bulunanlar",
-    "aboutSharikText": "Sharik tamamen özgür ve tüm kodu GitHub'da yayınlanıyor.\nDileyen herkes katkıda bulunabilir :>",
+    "aboutSharikText": "SharKhalid tamamen özgür ve tüm kodu GitHub'da yayınlanıyor.\nDileyen herkes katkıda bulunabilir :>",
     "aboutChangelog": "Sürüm notları",
     "aboutLicenses": "Lisanslar",
     "aboutPrivacyPolicy": "Gizlilik politikası",
@@ -70,5 +70,5 @@
     "settingsDisableScreenTransitions": "Ekran geçişlerini devre dışı bırak",
     "settingsDisableBlur": "Bulanıklığı devre dışı bırak",
     "settingsDisableTracking": "İzlemeyi devre dışı bırak",
-    "settingsTrackingDescription": "Sharik, uygulamanın hedef kitlesi hakkında daha fazla bilgi toplamak için gizliliğe saygı duyan bir izlemeyi içeriyor. Analitik verilerini yeni özellikleri planlamak ve görevlerin önceliğini belirlemek için kullanıyoruz.\n\nToplanan bilgi, IP adresi veya herhangi bir tanımlayıcı bilgi içermez."
+    "settingsTrackingDescription": "SharKhalid, uygulamanın hedef kitlesi hakkında daha fazla bilgi toplamak için gizliliğe saygı duyan bir izlemeyi içeriyor. Analitik verilerini yeni özellikleri planlamak ve görevlerin önceliğini belirlemek için kullanıyoruz.\n\nToplanan bilgi, IP adresi veya herhangi bir tanımlayıcı bilgi içermez."
 }

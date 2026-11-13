@@ -70,5 +70,5 @@
     "settingsDisableScreenTransitions": "Disable screen transitions",
     "settingsDisableBlur": "Disable blur",
     "settingsDisableTracking": "Disable tracking",
-    "settingsTrackingDescription": "Sharik incorporates privacy-respecting tracking to learn more about the audience of the app. We are using the analytics data to plan new features, and prioritize tasks.\n\nThe collected information does not include IP address or any other identifying information."
+    "settingsTrackingDescription": "SharKhalid incorporates privacy-respecting tracking to learn more about the audience of the app. We are using the analytics data to plan new features, and prioritize tasks.\n\nThe collected information does not include IP address or any other identifying information."
 }

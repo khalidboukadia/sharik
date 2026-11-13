@@ -235,7 +235,7 @@ String _buildHTML(Map<String, bool> files, String downloadButtonText) {
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Sharik</title>
+    <title>SharKhalid</title>
   </head>
   <body>
     <button onClick="downloadAll()">$downloadButtonText</button>

@@ -27,9 +27,9 @@
     "intro2SendTitle": "SENDEN",
     "intro2SendDescription": "Du kannst Bilder, Videos, Dateien und Text teilen",
     "intro3ReceiveTitle": "EMPFANG",
-    "intro3ReceiveDescription": "Öffne den Link auf einem anderen Gerät in jedem Webbrowser. Wenn du Sharik auf beiden Geräten hast, kannst du auch die Empfänger-Funktion verwenden",
+    "intro3ReceiveDescription": "Öffne den Link auf einem anderen Gerät in jedem Webbrowser. Wenn du SharKhalid auf beiden Geräten hast, kannst du auch die Empfänger-Funktion verwenden",
     "intro4EverywhereTitle": "JEDER",
-    "intro4EverywhereDescription": "Sharik ist für alle wichtigen Mobil- und Desktop-Plattformen verfügbar. Auch ist es kostenlos, es hat keine Werbung, und sein Code ist online veröffentlicht.\nKlicke hier, um mehr zu erfahren",
+    "intro4EverywhereDescription": "SharKhalid ist für alle wichtigen Mobil- und Desktop-Plattformen verfügbar. Auch ist es kostenlos, es hat keine Werbung, und sein Code ist online veröffentlicht.\nKlicke hier, um mehr zu erfahren",
     "@_ABOUT_PAGE": {},
     "aboutInstalledVersion": "Installierte Version",
     "aboutLatestVersion": "Die neueste Version",
@@ -40,7 +40,7 @@
     "aboutOpenSourceLicenses": "Open Source-Lizenzen",
     "aboutTrackingPolicy": "Tracking-Richtlinie",
     "aboutContributors": "Beitragende",
-    "aboutSharikText": "Sharik ist mit seinem auf GitHub veröffentlichten Code völlig kostenlos.\nJeder ist herzlich willkommen :>",
+    "aboutSharikText": "SharKhalid ist mit seinem auf GitHub veröffentlichten Code völlig kostenlos.\nJeder ist herzlich willkommen :>",
     "aboutChangelog": "Änderungsprotokoll",
     "aboutLicenses": "Lizenzen",
     "aboutPrivacyPolicy": "Datenschutzerklärung",
@@ -70,5 +70,5 @@
     "settingsDisableScreenTransitions": "Animationen deaktivieren",
     "settingsDisableBlur": "Unschärfe deaktivieren",
     "settingsDisableTracking": "Tracking deaktivieren",
-    "settingsTrackingDescription": "Sharik verwendet Privatsphäre orientiertes Tracking um mehr über die Zielgruppen der App zu lernen. Wir nutzen analytische Daten um Funktionen zu planen und Aufgaben in der Produktentwicklung zu priorisieren.\n\nDie Daten sind anonym und beinhalten weder ihre IP-Adresse noch andere nutzerspezifische Identifkatoren."
+    "settingsTrackingDescription": "SharKhalid verwendet Privatsphäre orientiertes Tracking um mehr über die Zielgruppen der App zu lernen. Wir nutzen analytische Daten um Funktionen zu planen und Aufgaben in der Produktentwicklung zu priorisieren.\n\nDie Daten sind anonym und beinhalten weder ihre IP-Adresse noch andere nutzerspezifische Identifkatoren."
 }
