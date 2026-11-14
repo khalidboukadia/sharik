@@ -1,0 +1,158 @@
+Flutter 3.3.10 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 135454af32 (3 years, 11 months ago) • 2022-12-15 07:36:55 -0800
+Engine • revision 3316dd8728
+Tools • Dart 2.18.6 • DevTools 2.15.0
+
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                 Welcome to Flutter! - https://flutter.dev                  ║
+  ║                                                                            ║
+  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+  ║ statistics and basic crash reports. This data is used to help improve      ║
+  ║ Flutter tools over time.                                                   ║
+  ║                                                                            ║
+  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+  ║ event will be sent, and then no further information will be sent by the    ║
+  ║ Flutter tool.                                                              ║
+  ║                                                                            ║
+  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+  ║ Note: The Google Privacy Policy describes how data is handled in this      ║
+  ║ service.                                                                   ║
+  ║                                                                            ║
+  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+  ║ crash reports to Google.                                                   ║
+  ║                                                                            ║
+  ║ Read about data we send with crash reports:                                ║
+  ║ https://flutter.dev/docs/reference/crash-reporting                         ║
+  ║                                                                            ║
+  ║ See Google's privacy policy:                                               ║
+  ║ https://policies.google.com/privacy                                        ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+
+"aa": 69 untranslated message(s).
+"de": 69 untranslated message(s).
+"es": 137 untranslated message(s).
+"es_ES": 69 untranslated message(s).
+"fa": 69 untranslated message(s).
+"fr": 69 untranslated message(s).
+"gu": 137 untranslated message(s).
+"gu_IN": 69 untranslated message(s).
+"hi": 69 untranslated message(s).
+"id": 69 untranslated message(s).
+"it": 69 untranslated message(s).
+"ja": 69 untranslated message(s).
+"ml": 137 untranslated message(s).
+"ml_IN": 69 untranslated message(s).
+"my": 69 untranslated message(s).
+"pl": 69 untranslated message(s).
+"pt": 137 untranslated message(s).
+"pt_BR": 69 untranslated message(s).
+"pt_PT": 69 untranslated message(s).
+"ru": 69 untranslated message(s).
+"si": 137 untranslated message(s).
+"si_LK": 69 untranslated message(s).
+"sk": 69 untranslated message(s).
+"ta": 69 untranslated message(s).
+"te": 69 untranslated message(s).
+"th": 69 untranslated message(s).
+"tr": 69 untranslated message(s).
+"uk": 69 untranslated message(s).
+"ur": 137 untranslated message(s).
+"ur_PK": 69 untranslated message(s).
+"zh": 137 untranslated message(s).
+"zh_CN": 69 untranslated message(s).
+To see a detailed report, use the untranslated-messages-file 
+option in the l10n.yaml file:
+untranslated-messages-file: desiredFileName.txt
+<other option>: <other selection> 
+
+
+This will generate a JSON format file containing all messages that 
+need to be translated.
+Running "flutter pub get" in sharik...                           1,284ms
+
+💪 Building with sound null safety 💪
+
+Running Gradle task 'assembleDebug'...                          
+Warning: The plugin qr_code_scanner requires Android SDK version 32.
+For more information about build configuration, see https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+One or more plugins require a higher Android SDK version.
+Fix this issue by adding the following to /home/runner/work/sharik/sharik/android/app/build.gradle:
+android {
+  compileSdkVersion 32
+  ...
+}
+
+Checking the license for package Android SDK Build-Tools 30.0.2 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Build-Tools 30.0.2 accepted.
+Preparing "Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)".
+"Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)" ready.
+Installing Android SDK Build-Tools 30.0.2 in /usr/local/lib/android/sdk/build-tools/30.0.2
+"Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)" complete.
+"Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)" finished.
+Checking the license for package Android SDK Platform 31 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 31 accepted.
+Preparing "Install Android SDK Platform 31 (revision: 1)".
+"Install Android SDK Platform 31 (revision: 1)" ready.
+Installing Android SDK Platform 31 in /usr/local/lib/android/sdk/platforms/android-31
+"Install Android SDK Platform 31 (revision: 1)" complete.
+"Install Android SDK Platform 31 (revision: 1)" finished.
+Checking the license for package Android SDK Platform 30 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 30 accepted.
+Preparing "Install Android SDK Platform 30 (revision: 3)".
+"Install Android SDK Platform 30 (revision: 3)" ready.
+Installing Android SDK Platform 30 in /usr/local/lib/android/sdk/platforms/android-30
+"Install Android SDK Platform 30 (revision: 3)" complete.
+"Install Android SDK Platform 30 (revision: 3)" finished.
+Checking the license for package Android SDK Platform 32 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 32 accepted.
+Preparing "Install Android SDK Platform 32 (revision: 1)".
+"Install Android SDK Platform 32 (revision: 1)" ready.
+Installing Android SDK Platform 32 in /usr/local/lib/android/sdk/platforms/android-32
+"Install Android SDK Platform 32 (revision: 1)" complete.
+"Install Android SDK Platform 32 (revision: 1)" finished.
+"aa": 69 untranslated message(s).
+"de": 69 untranslated message(s).
+"es": 137 untranslated message(s).
+"es_ES": 69 untranslated message(s).
+"fa": 69 untranslated message(s).
+"fr": 69 untranslated message(s).
+"gu": 137 untranslated message(s).
+"gu_IN": 69 untranslated message(s).
+"hi": 69 untranslated message(s).
+"id": 69 untranslated message(s).
+"it": 69 untranslated message(s).
+"ja": 69 untranslated message(s).
+"ml": 137 untranslated message(s).
+"ml_IN": 69 untranslated message(s).
+"my": 69 untranslated message(s).
+"pl": 69 untranslated message(s).
+"pt": 137 untranslated message(s).
+"pt_BR": 69 untranslated message(s).
+"pt_PT": 69 untranslated message(s).
+"ru": 69 untranslated message(s).
+"si": 137 untranslated message(s).
+"si_LK": 69 untranslated message(s).
+"sk": 69 untranslated message(s).
+"ta": 69 untranslated message(s).
+"te": 69 untranslated message(s).
+"th": 69 untranslated message(s).
+"tr": 69 untranslated message(s).
+"uk": 69 untranslated message(s).
+"ur": 137 untranslated message(s).
+"ur_PK": 69 untranslated message(s).
+"zh": 137 untranslated message(s).
+"zh_CN": 69 untranslated message(s).
+To see a detailed report, use the untranslated-messages-file 
+option in the l10n.yaml file:
+untranslated-messages-file: desiredFileName.txt
+<other option>: <other selection> 
+
+
+This will generate a JSON format file containing all messages that 
+need to be translated.
+Note: /home/runner/.pub-cache/hosted/pub.dartlang.org/device_apps-2.2.0/android/src/main/java/fr/g123k/deviceapps/DeviceAppsPlugin.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Running Gradle task 'assembleDebug'...                            144.3s
+✓  Built build/app/outputs/flutter-apk/app-debug.apk.
