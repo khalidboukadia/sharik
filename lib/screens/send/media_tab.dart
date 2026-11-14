@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -37,11 +38,16 @@ class _MediaTabState extends State<MediaTab>
   @override
   bool get wantKeepAlive => true;
 
+  // One permission dialog at a time for ALL tabs, and it is asked at most once
+  // automatically. Afterwards only the user's tap can ask again.
+  static Future<bool>? _inflight;
+  static bool _askedOnce = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _init();
+    _init(request: !_askedOnce);
   }
 
   @override
@@ -50,12 +56,31 @@ class _MediaTabState extends State<MediaTab>
     super.dispose();
   }
 
+  /// Coming back (e.g. from the system settings): only CHECK, never open a dialog.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && (_denied || _failed)) _init();
+    if (state == AppLifecycleState.resumed && (_denied || _failed) && !_loading) {
+      _init(request: false);
+    }
   }
 
-  Future<void> _init() async {
+  Future<bool> _ensurePermission(bool request) async {
+    if (await MediaApi.hasPermission(widget.kind)) return true;
+    if (!request) return false;
+
+    var flight = _inflight;
+    if (flight == null) {
+      _askedOnce = true;
+      flight = MediaApi.requestPermission(widget.kind);
+      _inflight = flight;
+      flight.whenComplete(() => _inflight = null);
+    }
+    await flight;
+    return MediaApi.hasPermission(widget.kind);
+  }
+
+  Future<void> _init({required bool request}) async {
+    if (_loading && _items.isNotEmpty) return;
     setState(() {
       _loading = true;
       _denied = false;
@@ -63,8 +88,7 @@ class _MediaTabState extends State<MediaTab>
     });
 
     try {
-      final granted = await MediaApi.hasPermission(widget.kind) ||
-          await MediaApi.requestPermission(widget.kind);
+      final granted = await _ensurePermission(request);
       if (!mounted) return;
       if (!granted) {
         setState(() {
@@ -87,6 +111,21 @@ class _MediaTabState extends State<MediaTab>
         _failed = true;
       });
     }
+  }
+
+  Future<void> _pickWithSystem() async {
+    final res = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: widget.kind == MediaKind.images
+          ? FileType.image
+          : widget.kind == MediaKind.videos
+              ? FileType.video
+              : FileType.audio,
+    );
+    if (res == null || !mounted) return;
+    final items = await itemsFromPaths(res.paths);
+    if (!mounted) return;
+    context.read<SendSelection>().addAll(items);
   }
 
   SelectedItem _selected(MediaItem m) =>
@@ -124,8 +163,24 @@ class _MediaTabState extends State<MediaTab>
                 child: PrimaryButton(
                   height: 48,
                   fontSize: 16,
-                  onClick: _init,
+                  onClick: () => _init(request: true),
                   text: context.l.sendAllowAccess,
+                ),
+              ),
+              const SizedBox(height: 10),
+              // works even without any permission: the system picker
+              SizedBox(
+                width: 220,
+                child: TransparentButton(
+                  Center(
+                    child: Text(
+                      context.l.sendTabFiles,
+                      style: GoogleFonts.getFont(context.l.fontAndika, fontSize: 15),
+                    ),
+                  ),
+                  _pickWithSystem,
+                  TransparentButtonBackground.def,
+                  border: true,
                 ),
               ),
               const SizedBox(height: 10),

@@ -99,13 +99,30 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
             return
         }
         if (pendingPermission != null) {
-            result.error("busy", "A permission request is already running", null)
+            // a dialog is already on screen: never stack a second one, just report the current state
+            result.success(false)
             return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             pendingKind = kind
             pendingPermission = result
-            activity.requestPermissions(arrayOf(permissionFor(kind)), PERMISSION_REQUEST_CODE)
+            // Ask for the whole media group in ONE request (images + videos + audio on 13+),
+            // so the user is not asked again for every tab.
+            val wanted = if (Build.VERSION.SDK_INT >= 33) {
+                arrayOf(
+                    "android.permission.READ_MEDIA_IMAGES",
+                    "android.permission.READ_MEDIA_VIDEO",
+                    "android.permission.READ_MEDIA_AUDIO"
+                )
+            } else {
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            try {
+                activity.requestPermissions(wanted, PERMISSION_REQUEST_CODE)
+            } catch (e: Exception) {
+                pendingPermission = null
+                result.success(false)
+            }
         } else {
             result.success(true)
         }
@@ -114,9 +131,10 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
     /** Called by MainActivity.onRequestPermissionsResult */
     fun onRequestPermissionsResult(requestCode: Int, grantResults: IntArray) {
         if (requestCode != PERMISSION_REQUEST_CODE) return
-        val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
-        pendingPermission?.success(granted)
+        val pending = pendingPermission
         pendingPermission = null
+        // Judge by the real state, not by grantResults[0]: the answer can be mixed.
+        pending?.success(hasPermission(pendingKind))
     }
 
     private fun runAsync(result: MethodChannel.Result, block: () -> Any?) {
@@ -139,8 +157,6 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
 
     @Suppress("DEPRECATION")
     private fun list(kind: String): List<Map<String, Any?>> {
-        if (!hasPermission(kind)) throw SecurityException("Media permission not granted")
-
         val projection = ArrayList<String>().apply {
             add(MediaStore.MediaColumns._ID)
             add(MediaStore.MediaColumns.DISPLAY_NAME)
