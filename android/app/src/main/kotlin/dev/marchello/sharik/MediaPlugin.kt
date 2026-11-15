@@ -42,6 +42,7 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
         when (call.method) {
             "hasPermission" -> result.success(hasPermission(call.argument<String>("kind") ?: "images"))
             "requestPermission" -> requestPermission(call.argument<String>("kind") ?: "images", result)
+            "diagnostics" -> result.success(diagnostics())
             "openAppSettings" -> {
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     .setData(Uri.fromParts("package", activity.packageName, null))
@@ -87,6 +88,22 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
         } else {
             Manifest.permission.READ_EXTERNAL_STORAGE
         }
+
+    /** Plain-text state shown in the app when something goes wrong. */
+    private fun diagnostics(): String {
+        val names = if (Build.VERSION.SDK_INT >= 33) {
+            listOf("READ_MEDIA_IMAGES", "READ_MEDIA_VIDEO", "READ_MEDIA_AUDIO")
+        } else {
+            listOf("READ_EXTERNAL_STORAGE")
+        }
+        val sb = StringBuilder("Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
+        for (n in names) {
+            val granted = Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                activity.checkSelfPermission("android.permission.$n") == PackageManager.PERMISSION_GRANTED
+            sb.append("\n$n: ${if (granted) "granted" else "denied"}")
+        }
+        return sb.toString()
+    }
 
     private fun hasPermission(kind: String): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true
@@ -157,15 +174,33 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
 
     @Suppress("DEPRECATION")
     private fun list(kind: String): List<Map<String, Any?>> {
-        val projection = ArrayList<String>().apply {
+        val full = ArrayList<String>().apply {
             add(MediaStore.MediaColumns._ID)
             add(MediaStore.MediaColumns.DISPLAY_NAME)
-            add(MediaStore.MediaColumns.DATA) // deprecated on Q+, but still readable with READ_EXTERNAL_STORAGE
+            add(MediaStore.MediaColumns.DATA) // deprecated on Q+, but still readable with the media permission
             add(MediaStore.MediaColumns.SIZE)
             if (kind != "images") add(MediaStore.MediaColumns.DURATION)
             if (kind == "audio") add(MediaStore.Audio.Media.ARTIST)
         }.toTypedArray()
+        val minimal = arrayOf(
+            MediaStore.MediaColumns._ID,
+            MediaStore.MediaColumns.DISPLAY_NAME,
+            MediaStore.MediaColumns.DATA,
+            MediaStore.MediaColumns.SIZE
+        )
 
+        return try {
+            query(kind, full)
+        } catch (e: SecurityException) {
+            throw e
+        } catch (e: Exception) {
+            // an optional column is missing on this device: retry with the bare minimum
+            query(kind, minimal)
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun query(kind: String, projection: Array<String>): List<Map<String, Any?>> {
         val out = ArrayList<Map<String, Any?>>()
         activity.contentResolver.query(
             contentUri(kind),
@@ -175,22 +210,22 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
             "${MediaStore.MediaColumns.DATE_MODIFIED} DESC"
         )?.use { c ->
             val idCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
-            val nameCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
+            val nameCol = c.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
             val dataCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-            val sizeCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns.SIZE)
-            val durCol = if (kind != "images") c.getColumnIndexOrThrow(MediaStore.MediaColumns.DURATION) else -1
-            val artistCol = if (kind == "audio") c.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST) else -1
+            val sizeCol = c.getColumnIndex(MediaStore.MediaColumns.SIZE)
+            val durCol = c.getColumnIndex(MediaStore.MediaColumns.DURATION)
+            val artistCol = c.getColumnIndex(MediaStore.Audio.Media.ARTIST)
 
             while (c.moveToNext() && out.size < MAX_ITEMS) {
                 val path = c.getString(dataCol) ?: continue
                 out.add(
                     mapOf(
                         "id" to c.getLong(idCol),
-                        "name" to (c.getString(nameCol) ?: path.substringAfterLast('/')),
+                        "name" to ((if (nameCol >= 0) c.getString(nameCol) else null) ?: path.substringAfterLast('/')),
                         "path" to path,
-                        "size" to c.getLong(sizeCol),
-                        "duration" to if (durCol >= 0) c.getLong(durCol) else 0L,
-                        "artist" to if (artistCol >= 0) c.getString(artistCol) else null
+                        "size" to (if (sizeCol >= 0) c.getLong(sizeCol) else 0L),
+                        "duration" to (if (durCol >= 0) c.getLong(durCol) else 0L),
+                        "artist" to (if (artistCol >= 0) c.getString(artistCol) else null)
                     )
                 )
             }

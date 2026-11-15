@@ -143,6 +143,9 @@ class MediaApi {
   static Future<bool> requestPermission(MediaKind kind) async =>
       (await _channel.invokeMethod<bool>('requestPermission', {'kind': kind.name})) ?? false;
 
+  static Future<String> diagnostics() async =>
+      (await _channel.invokeMethod<String>('diagnostics')) ?? '';
+
   /// Opens the system page of this app (needed once a permission was refused for good).
   static Future<bool> openAppSettings() async =>
       (await _channel.invokeMethod<bool>('openAppSettings')) ?? false;

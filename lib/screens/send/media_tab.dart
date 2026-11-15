@@ -30,6 +30,7 @@ class _MediaTabState extends State<MediaTab>
   bool _loading = true;
   bool _denied = false;
   bool _failed = false;
+  String _info = '';
   List<MediaItem> _items = const [];
 
   // video thumbnails are requested lazily, once per item
@@ -91,9 +92,15 @@ class _MediaTabState extends State<MediaTab>
       final granted = await _ensurePermission(request);
       if (!mounted) return;
       if (!granted) {
+        String diag = '';
+        try {
+          diag = await MediaApi.diagnostics();
+        } catch (_) {}
+        if (!mounted) return;
         setState(() {
           _loading = false;
           _denied = true;
+          _info = diag;
         });
         return;
       }
@@ -104,11 +111,16 @@ class _MediaTabState extends State<MediaTab>
         _items = items;
         _loading = false;
       });
-    } catch (_) {
+    } catch (e) {
+      var diag = '';
+      try {
+        diag = await MediaApi.diagnostics();
+      } catch (_) {}
       if (!mounted) return;
       setState(() {
         _loading = false;
         _failed = true;
+        _info = 'Error: $e\n$diag';
       });
     }
   }
@@ -157,6 +169,14 @@ class _MediaTabState extends State<MediaTab>
                 textAlign: TextAlign.center,
                 style: GoogleFonts.getFont(context.l.fontAndika, fontSize: 16),
               ),
+              if (_info.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                SelectableText(
+                  _info,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                ),
+              ],
               const SizedBox(height: 16),
               SizedBox(
                 width: 220,
