@@ -67,7 +67,7 @@ class _MediaTabState extends State<MediaTab>
 
   Future<bool> _ensurePermission(bool request) async {
     if (await MediaApi.hasPermission(widget.kind)) return true;
-    if (!request) return false;
+    if (!request) return _canListAnyway();
 
     var flight = _inflight;
     if (flight == null) {
@@ -77,7 +77,17 @@ class _MediaTabState extends State<MediaTab>
       flight.whenComplete(() => _inflight = null);
     }
     await flight;
-    return MediaApi.hasPermission(widget.kind);
+    return await MediaApi.hasPermission(widget.kind) || await _canListAnyway();
+  }
+
+  /// The permission check can be wrong on some ROMs: if the system hands out
+  /// media anyway, just show it.
+  Future<bool> _canListAnyway() async {
+    try {
+      return (await MediaApi.list(widget.kind)).isNotEmpty;
+    } catch (_) {
+      return false;
+    }
   }
 
   Future<void> _init({required bool request}) async {

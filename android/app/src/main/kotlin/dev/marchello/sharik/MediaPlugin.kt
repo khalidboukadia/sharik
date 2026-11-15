@@ -102,6 +102,25 @@ class MediaPlugin(private val activity: Activity) : MethodChannel.MethodCallHand
                 activity.checkSelfPermission("android.permission.$n") == PackageManager.PERMISSION_GRANTED
             sb.append("\n$n: ${if (granted) "granted" else "denied"}")
         }
+        try {
+            @Suppress("DEPRECATION")
+            val info = activity.packageManager.getPackageInfo(activity.packageName, PackageManager.GET_PERMISSIONS)
+            val req = info.requestedPermissions
+            val flags = info.requestedPermissionsFlags
+            for (n in names) {
+                val i = req?.indexOf("android.permission.$n") ?: -1
+                sb.append(
+                    if (i < 0) "\n$n declared: NO"
+                    else "\n$n declared: yes, system flag granted: ${(flags[i] and 2) != 0}"
+                )
+            }
+            sb.append("\ntargetSdk: ${activity.applicationInfo.targetSdkVersion}")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                sb.append("\nrationale: ${activity.shouldShowRequestPermissionRationale("android.permission.${names[0]}")}")
+            }
+        } catch (e: Exception) {
+            sb.append("\n(diag error: ${e.message})")
+        }
         return sb.toString()
     }
 

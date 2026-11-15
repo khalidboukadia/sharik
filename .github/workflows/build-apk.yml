@@ -35,6 +35,12 @@ jobs:
             flutter build apk --release --split-per-abi
           } 2>&1 | tee build.log
 
+      - name: Record merged manifest
+        if: always()
+        run: |
+          f=$(find build/app/intermediates -path '*merged_manifests*release*' -name AndroidManifest.xml | head -1)
+          { echo "=== merged manifest: $f"; grep -n "uses-permission\|targetSdk\|minSdk" "$f"; } >> build.log 2>&1 || true
+
       - name: Publish APK as a release
         if: success()
         uses: softprops/action-gh-release@v2
