@@ -44,7 +44,10 @@ class LanguageManager extends ChangeNotifier {
     final l = Hive.box<String>('strings').get('language', defaultValue: null);
 
     if (l != null) {
-      _language = languageList.firstWhere((element) => element.name == l);
+      _language = languageList.firstWhere(
+        (element) => element.name == l,
+        orElse: () => languageList.first,
+      );
       _languageSet = true;
       notifyListeners();
       return;

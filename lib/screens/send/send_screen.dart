@@ -151,7 +151,7 @@ class _SendScreenState extends State<SendScreen>
                   const MediaTab(MediaKind.audio),
                   FilesTab(
                     onText: (text) =>
-                        Navigator.of(context).pop(SendResult(text: text.data)),
+                        Navigator.of(context).pop(SendResult(text: text)),
                   ),
                 ],
               ),

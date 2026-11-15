@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../components/buttons.dart';
-import '../logic/sharing_object.dart';
 import '../utils/helper.dart';
 
 // review: done
@@ -48,16 +47,7 @@ class _ShareTextDialogState extends State<ShareTextDialog> {
           text.isEmpty
               ? null
               : () {
-                  Navigator.of(context).pop(
-                    SharingObject(
-                      data: text,
-                      type: SharingObjectType.text,
-                      name: SharingObject.getSharingName(
-                        SharingObjectType.text,
-                        text,
-                      ),
-                    ),
-                  );
+                  Navigator.of(context).pop(text);
                 },
         ),
         const SizedBox(width: 4),

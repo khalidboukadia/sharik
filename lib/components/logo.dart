@@ -17,9 +17,9 @@ class SharikLogo extends StatelessWidget {
             ),
             Text(
               'SharKhalid',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.comfortaa(
                 fontSize: 34,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w400,
               ),
             )
           ],

@@ -320,7 +320,7 @@ class _ConnectScreenState extends State<ConnectScreen> with WidgetsBindingObserv
               Expanded(
                 child: SelectableText(
                   value,
-                  style: GoogleFonts.jetBrainsMono(fontSize: 15, fontWeight: FontWeight.w600),
+                  style: const TextStyle(fontFamily: 'monospace', fontSize: 15, fontWeight: FontWeight.w600),
                 ),
               ),
             ],

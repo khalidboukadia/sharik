@@ -1,38 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 import 'conf.dart';
 import 'logic/language.dart';
 import 'logic/theme.dart';
-import 'screens/loading.dart';
+import 'screens/home.dart';
 import 'utils/material_ink_well.dart';
 
-// todo before migrating locales:
-// - design review (colors, spacing, animations, etc)
-// - accessibility
-// - create sharing intent (android, ios, maybe desktop?)
-// - code cleanup & to-do review
-// - review imports (cupertino, material, etc -> use only foundation or widgets)
-// - cleanup assets & fonts
-// - check fonts for usage
-// - font licenses
-// - get rid of all prints
-// - add an icon to the android notifications bar
-
 // todo review variables' access scope
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter('sharik_storage');
+  await Hive.openBox<String>('strings');
 
-void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LanguageManager()),
-        ChangeNotifierProvider(create: (_) => ThemeManager()),
-        // ChangeNotifierProvider(create: (_) => null)
+        ChangeNotifierProvider(create: (_) => LanguageManager()..init()),
+        ChangeNotifierProvider(create: (_) => ThemeManager()..init()),
       ],
       child: SharikApp(),
     ),
@@ -57,41 +46,7 @@ class SharikApp extends StatelessWidget {
               systemNavigationBarIconBrightness: Brightness.dark,
             ),
       child: MaterialApp(
-        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        builder: (context, child) {
-          return ResponsiveWrapper.builder(
-            ScrollConfiguration(
-              behavior: BouncingScrollBehavior(),
-              child: child!,
-            ),
-            minWidth: 400,
-            defaultScale: true,
-            breakpoints: [
-              const ResponsiveBreakpoint.resize(400, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(680, name: TABLET),
-              const ResponsiveBreakpoint.autoScale(
-                1100,
-                name: DESKTOP,
-                scaleFactor: 1.2,
-              ),
-            ],
-            breakpointsLandscape: [
-              const ResponsiveBreakpoint.autoScaleDown(
-                400,
-                name: MOBILE,
-                scaleFactor: 0.7,
-              ),
-              const ResponsiveBreakpoint.autoScale(
-                680,
-                name: TABLET,
-                scaleFactor: 0.7,
-              ),
-              // const ResponsiveBreakpoint.autoScale(1100, name: DESKTOP, scaleFactor: 0.5),
-            ],
-          );
-        },
-        // builder: DevicePreview.appBuilder, //
         locale: context.watch<LanguageManager>().language.locale,
         localizationsDelegates: const [
           AppLocalizations.delegate,
@@ -166,7 +121,7 @@ class SharikApp extends StatelessWidget {
           buttonColor: Colors.deepPurple.shade100.withOpacity(0.8),
         ),
         themeMode: context.watch<ThemeManager>().theme,
-        home: LoadingScreen(),
+        home: const HomeScreen(),
       ),
     );
   }

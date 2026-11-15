@@ -4,10 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../../dialogs/open_dialog.dart';
 import '../../dialogs/share_text.dart';
 import '../../logic/send_selection.dart';
-import '../../logic/sharing_object.dart';
 import '../../utils/helper.dart';
 import 'selection_widgets.dart';
 
@@ -16,7 +14,7 @@ import 'selection_widgets.dart';
 class FilesTab extends StatefulWidget {
   /// called when the user typed a text: text cannot be mixed with files, so
   /// the Send screen closes right away with it
-  final void Function(SharingObject text) onText;
+  final void Function(String text) onText;
 
   const FilesTab({required this.onText});
 
@@ -38,7 +36,7 @@ class _FilesTabState extends State<FilesTab>
   }
 
   Future<void> _typeText() async {
-    final text = await openDialog(context, ShareTextDialog());
+    final text = await showDialog<String>(context: context, builder: (_) => ShareTextDialog());
     if (text != null) widget.onText(text);
   }
 

@@ -26,13 +26,13 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Build debug APK
+      - name: Build release APKs
         run: |
           set -o pipefail
           {
             flutter --version
             flutter pub get
-            flutter build apk --debug
+            flutter build apk --release --split-per-abi
           } 2>&1 | tee build.log
 
       - name: Publish APK as a release
@@ -42,9 +42,12 @@ jobs:
           tag_name: app-sharing-latest
           name: Sharik (app sharing) - latest build
           prerelease: true
-          body: Debug build of the sharik-app-sharing branch, commit ${{ github.sha }}
+          body: Release build (split per CPU; arm64-v8a fits almost every modern phone) of the sharik-app-sharing branch, commit ${{ github.sha }}
           target_commitish: ${{ github.sha }}
-          files: build/app/outputs/flutter-apk/app-debug.apk
+          files: |
+            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+            build/app/outputs/flutter-apk/app-x86_64-release.apk
 
       # keep the build log readable from the repo (branch ci-logs)
       - name: Save build log

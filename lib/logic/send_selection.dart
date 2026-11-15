@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-import '../conf.dart';
 import '../utils/format.dart';
 import 'native_bridge.dart';
 import 'session/session_models.dart';
-import 'sharing_object.dart';
 
 enum SelectedKind { app, file }
 
@@ -94,32 +92,6 @@ class SendSelection extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Resolves every selected app to ALL of its APK files (base + splits) and
-  /// builds the object handed to the existing sharing flow.
-  Future<SharingObject> toSharingObject() async {
-    final paths = <String>[];
-    final names = <String>[];
-
-    for (final item in _items.values) {
-      if (item.kind == SelectedKind.app) {
-        final info = await AppPackageApi.getAppPackage(item.packageName!);
-        paths.addAll(info.files.map((f) => f.path));
-        names.add(info.appName);
-      } else {
-        paths.add(item.path!);
-        names.add(item.label);
-      }
-    }
-
-    final onlyApps = _items.values.every((i) => i.kind == SelectedKind.app);
-    final n = _items.length;
-
-    return SharingObject(
-      type: onlyApps ? SharingObjectType.app : SharingObjectType.file,
-      data: paths.join(multipleFilesDelimiter),
-      name: '${n == 1 ? '' : '$n: '}${names.join(' ')}',
-    );
-  }
 }
 
 /// What the Send screen hands back: ticked items and/or a typed text.
