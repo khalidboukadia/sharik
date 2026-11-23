@@ -32,7 +32,8 @@ jobs:
           {
             flutter --version
             flutter pub get
-            flutter build apk --release --split-per-abi
+            flutter build apk --release
+            cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/SharKhalid.apk
           } 2>&1 | tee build.log
 
       - name: Record merged manifest
@@ -48,12 +49,10 @@ jobs:
           tag_name: app-sharing-latest
           name: SharKhalid (app sharing) - latest build
           prerelease: true
-          body: Release build (split per CPU; arm64-v8a fits almost every modern phone) of the sharik-app-sharing branch, commit ${{ github.sha }}
+          body: Universal release build (one APK for 32-bit and 64-bit phones) of the sharik-app-sharing branch, commit ${{ github.sha }}
           target_commitish: ${{ github.sha }}
           files: |
-            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
-            build/app/outputs/flutter-apk/app-x86_64-release.apk
+            build/app/outputs/flutter-apk/SharKhalid.apk
 
       # keep the build log readable from the repo (branch ci-logs)
       - name: Save build log
