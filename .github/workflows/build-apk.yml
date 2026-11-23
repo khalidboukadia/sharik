@@ -46,7 +46,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: app-sharing-latest
-          name: Sharik (app sharing) - latest build
+          name: SharKhalid (app sharing) - latest build
           prerelease: true
           body: Release build (split per CPU; arm64-v8a fits almost every modern phone) of the sharik-app-sharing branch, commit ${{ github.sha }}
           target_commitish: ${{ github.sha }}
