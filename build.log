@@ -1,0 +1,129 @@
+Flutter 3.3.10 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 135454af32 (3 years, 11 months ago) • 2022-12-15 07:36:55 -0800
+Engine • revision 3316dd8728
+Tools • Dart 2.18.6 • DevTools 2.15.0
+
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                 Welcome to Flutter! - https://flutter.dev                  ║
+  ║                                                                            ║
+  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+  ║ statistics and basic crash reports. This data is used to help improve      ║
+  ║ Flutter tools over time.                                                   ║
+  ║                                                                            ║
+  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+  ║ event will be sent, and then no further information will be sent by the    ║
+  ║ Flutter tool.                                                              ║
+  ║                                                                            ║
+  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+  ║ Note: The Google Privacy Policy describes how data is handled in this      ║
+  ║ service.                                                                   ║
+  ║                                                                            ║
+  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+  ║ crash reports to Google.                                                   ║
+  ║                                                                            ║
+  ║ Read about data we send with crash reports:                                ║
+  ║ https://flutter.dev/docs/reference/crash-reporting                         ║
+  ║                                                                            ║
+  ║ See Google's privacy policy:                                               ║
+  ║ https://policies.google.com/privacy                                        ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+
+Running "flutter pub get" in sharik...                           1,553ms
+
+💪 Building with sound null safety 💪
+
+Running Gradle task 'assembleRelease'...                        
+Warning: The plugin file_picker requires Android SDK version 33.
+For more information about build configuration, see https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+Warning: The plugin flutter_plugin_android_lifecycle requires Android SDK version 33.
+For more information about build configuration, see https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+Warning: The plugin path_provider_android requires Android SDK version 33.
+For more information about build configuration, see https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+Warning: The plugin qr_code_scanner requires Android SDK version 32.
+For more information about build configuration, see https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+One or more plugins require a higher Android SDK version.
+Fix this issue by adding the following to /home/runner/work/sharik/sharik/android/app/build.gradle:
+android {
+  compileSdkVersion 33
+  ...
+}
+
+Checking the license for package Android SDK Build-Tools 30.0.2 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Build-Tools 30.0.2 accepted.
+Preparing "Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)".
+"Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)" ready.
+Installing Android SDK Build-Tools 30.0.2 in /usr/local/lib/android/sdk/build-tools/30.0.2
+"Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)" complete.
+"Install Android SDK Build-Tools 30.0.2 (revision: 30.0.2)" finished.
+Checking the license for package Android SDK Platform 31 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 31 accepted.
+Preparing "Install Android SDK Platform 31 (revision: 1)".
+"Install Android SDK Platform 31 (revision: 1)" ready.
+Installing Android SDK Platform 31 in /usr/local/lib/android/sdk/platforms/android-31
+"Install Android SDK Platform 31 (revision: 1)" complete.
+"Install Android SDK Platform 31 (revision: 1)" finished.
+Checking the license for package Android SDK Platform 30 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 30 accepted.
+Preparing "Install Android SDK Platform 30 (revision: 3)".
+"Install Android SDK Platform 30 (revision: 3)" ready.
+Installing Android SDK Platform 30 in /usr/local/lib/android/sdk/platforms/android-30
+"Install Android SDK Platform 30 (revision: 3)" complete.
+"Install Android SDK Platform 30 (revision: 3)" finished.
+Checking the license for package Android SDK Platform 32 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 32 accepted.
+Preparing "Install Android SDK Platform 32 (revision: 1)".
+"Install Android SDK Platform 32 (revision: 1)" ready.
+Installing Android SDK Platform 32 in /usr/local/lib/android/sdk/platforms/android-32
+"Install Android SDK Platform 32 (revision: 1)" complete.
+"Install Android SDK Platform 32 (revision: 1)" finished.
+Checking the license for package Android SDK Platform 33 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 33 accepted.
+Preparing "Install Android SDK Platform 33 (revision: 3)".
+"Install Android SDK Platform 33 (revision: 3)" ready.
+Installing Android SDK Platform 33 in /usr/local/lib/android/sdk/platforms/android-33
+"Install Android SDK Platform 33 (revision: 3)" complete.
+"Install Android SDK Platform 33 (revision: 3)" finished.
+Expected to find fonts for (MaterialIcons, packages/lucide_icons/Lucide), but found (packages/lucide_icons/Lucide). This usually means you are referring to font families in an IconData class but not including them in the assets section of your pubspec.yaml, are missing the package that would include them, or are missing "uses-material-design: true".
+Note: /home/runner/.pub-cache/hosted/pub.dartlang.org/device_apps-2.2.0/android/src/main/java/fr/g123k/deviceapps/DeviceAppsPlugin.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+w: Runtime JAR files in the classpath should have the same version. These files were found in the classpath:
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.5.30/5fd47535cc85f9e24996f939c2de6583991481b0/kotlin-stdlib-jdk8-1.5.30.jar (version 1.5)
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.7.10/1ef73fee66f45d52c67e2aca12fd945dbe0659bf/kotlin-stdlib-jdk7-1.7.10.jar (version 1.7)
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.7.10/d2abf9e77736acc4450dc4a3f707fa2c10f5099d/kotlin-stdlib-1.7.10.jar (version 1.7)
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.7.10/bac80c520d0a9e3f3673bc2658c6ed02ef45a76a/kotlin-stdlib-common-1.7.10.jar (version 1.7)
+w: Some runtime JAR files in the classpath have an incompatible version. Consider removing them from the classpath
+e: /home/runner/work/sharik/sharik/build/qr_code_scanner/.transforms/d4cf2d0599ea71748c8e6934cad2d7e5/transformed/out/jars/classes.jar!/META-INF/qr_code_scanner_release.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+e: /home/runner/work/sharik/sharik/build/wakelock/.transforms/5350fa20d274b45393b2f6e9fab8ed08/transformed/out/jars/classes.jar!/META-INF/wakelock_release.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+e: /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.7.10/1ef73fee66f45d52c67e2aca12fd945dbe0659bf/kotlin-stdlib-jdk7-1.7.10.jar!/META-INF/kotlin-stdlib-jdk7.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+e: /home/runner/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.5.0/857678d6b4ca7b28571ef7935c668bdb57e15027/annotation-1.5.0.jar!/META-INF/annotation.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+e: /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.7.10/d2abf9e77736acc4450dc4a3f707fa2c10f5099d/kotlin-stdlib-1.7.10.jar!/META-INF/kotlin-stdlib.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+e: /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.7.10/bac80c520d0a9e3f3673bc2658c6ed02ef45a76a/kotlin-stdlib-common-1.7.10.jar!/META-INF/kotlin-stdlib-common.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+e: /home/runner/work/sharik/sharik/build/app/intermediates/app_classes/release/classes.jar!/META-INF/app_release.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.7.1, expected version is 1.5.1.
+w: Runtime JAR files in the classpath should have the same version. These files were found in the classpath:
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.5.30/5fd47535cc85f9e24996f939c2de6583991481b0/kotlin-stdlib-jdk8-1.5.30.jar (version 1.5)
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.7.10/1ef73fee66f45d52c67e2aca12fd945dbe0659bf/kotlin-stdlib-jdk7-1.7.10.jar (version 1.7)
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.7.10/d2abf9e77736acc4450dc4a3f707fa2c10f5099d/kotlin-stdlib-1.7.10.jar (version 1.7)
+    /home/runner/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.7.10/bac80c520d0a9e3f3673bc2658c6ed02ef45a76a/kotlin-stdlib-common-1.7.10.jar (version 1.7)
+w: Some runtime JAR files in the classpath have an incompatible version. Consider removing them from the classpath
+No issues found.
+Running Gradle task 'assembleRelease'...                          188.4s
+✓  Built build/app/outputs/flutter-apk/app-release.apk (23.5MB).
+=== merged manifest: build/app/intermediates/merged_manifests/release/AndroidManifest.xml
+9:        android:minSdkVersion="21"
+10:        android:targetSdkVersion="31" />
+12:    <uses-permission android:name="android.permission.INTERNET" />
+13:    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+15:    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+17:    <uses-permission
+20:    <uses-permission
+23:    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+24:    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+25:    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+27:    <uses-permission android:name="android.permission.CAMERA" />
+33:    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+34:    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+35:    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+36:    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+37:    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
